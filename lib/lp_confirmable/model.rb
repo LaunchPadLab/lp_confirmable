@@ -1,4 +1,4 @@
-require 'error'
+require 'lp_confirmable/error'
 
 module LpConfirmable
   module Model
