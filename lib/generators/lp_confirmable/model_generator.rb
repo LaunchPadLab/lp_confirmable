@@ -22,7 +22,11 @@ module LpConfirmable
       end
 
       def migration_class_name
-        migration_name.camelize
+        if Rails::VERSION::MAJOR >= 5
+          "ActiveRecord::Migration[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
+        else
+          'ActiveRecord::Migration'
+        end
       end
     end
   end

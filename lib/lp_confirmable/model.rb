@@ -1,8 +1,8 @@
 require 'lp_confirmable/error'
 
 module LpConfirmable
-  module Model
-    module ClassMethods
+  class Model
+    class << self
       def confirm_by_token!(klass, confirmation_token)
 
         check_confirmable! klass
@@ -46,11 +46,16 @@ module LpConfirmable
       end
 
       def confirmable?(klass)
-        %q(
+
+        return false unless klass.respond_to? :column_names
+
+        column_names = klass.column_names
+
+        %w(
           confirmation_token
           confirmed_at
           confirmation_sent_at
-        ).all? { |attr| klass.column_names.include? attr }
+        ).all? { |attr| column_names.include? attr }
       end
 
       def check_token_active!(model)
