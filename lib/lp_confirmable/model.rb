@@ -23,7 +23,7 @@ module LpConfirmable
 
         check_confirmable! model.class
 
-        confirmation_token = gen_confirmation_token
+        confirmation_token = generate_confirmation_token Config.token_length
 
         model.update_columns(confirmation_token: confirmation_token)
 
@@ -67,6 +67,11 @@ module LpConfirmable
 
       def confirmation_not_sent?(model)
         model.confirmation_sent_at == nil
+      end
+
+      def generate_confirmation_token(length)
+        rlength = (length * 3) / 4
+        SecureRandom.urlsafe_base64(rlength).tr('lIO0', 'sxyz')
       end
     end
   end
