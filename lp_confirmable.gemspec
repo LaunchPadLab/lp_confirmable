@@ -12,5 +12,5 @@ Gem::Specification.new do |s|
   s.email       = 'dave@launchpadlab.com'
   s.homepage    = 'https://github.com/launchpadlab/lp_confirmable'
   s.license     = 'MIT'
-  s.files    = 'git ls-files -z'.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  s.files       = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
 end
