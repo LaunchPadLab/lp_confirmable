@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = LpConfirmable::VERSION
   s.date        = '2017-02-03'
   s.summary     = 'Confirm!'
-  s.description = 'A simple confirmable gem'
+  s.description = 'A simple confirmable logic'
   s.authors     = ['Dave Corwin']
   s.email       = 'dave@launchpadlab.com'
   s.homepage    = 'https://github.com/launchpadlab/lp_confirmable'
