@@ -1,0 +1,17 @@
+PATH
+  remote: .
+  specs:
+    lp_confirmable (0.0.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  lp_confirmable!
+
+BUNDLED WITH
+   1.12.5

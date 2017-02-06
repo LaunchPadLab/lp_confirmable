@@ -1,7 +1,11 @@
 module LpConfirmable
   def self.config
-    @config ||= Config.new
-    yield @config
+    @config ||= LpConfirmable::Config.new
+    if block_given?
+      yield @config
+    else
+      @config
+    end
   end
 end
 

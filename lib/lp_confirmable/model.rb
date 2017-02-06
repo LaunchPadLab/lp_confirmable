@@ -1,4 +1,5 @@
 require 'lp_confirmable/error'
+require 'securerandom'
 
 module LpConfirmable
   class Model
@@ -13,32 +14,36 @@ module LpConfirmable
 
         model.update_columns(
           confirmation_token: nil,
-          confirmed_at: Time.current,
+          confirmed_at: Time.now,
         )
 
         model
       end
 
-      def set_confirmation_token!(model)
+      def set_confirmation_token!(model, token_length=LpConfirmable.config.token_length)
 
         check_confirmable! model.class
 
-        confirmation_token = generate_confirmation_token Config.token_length
+        confirmation_token = generate_confirmation_token token_length
 
-        model.update_columns(confirmation_token: confirmation_token)
+        model.update_columns(
+          confirmation_token: confirmation_token,
+          confirmed_at: nil,
+          confirmation_sent_at: nil,
+        )
 
         confirmation_token
       end
 
-      def send_confirmation_instructions(model)
+      def send_confirmation_instructions!(model)
 
         check_confirmable! model.class
 
         check_confirmation_not_sent! model
 
-        yield
+        yield if block_given?
 
-        model.update_columns(confirmation_sent_at: Time.current)
+        model.update_columns(confirmation_sent_at: Time.now)
       end
 
       def check_confirmable!(klass)
@@ -63,7 +68,9 @@ module LpConfirmable
       end
 
       def token_active?(model)
-        Time.current <= (model.confirmation_sent_at + Config.token_lifetime)
+        model.confirmation_token &&
+        model.confirmation_sent_at &&
+        Time.now <= (model.confirmation_sent_at + (LpConfirmable.config.token_lifetime * 60 * 60 * 24))
       end
 
       def check_confirmation_not_sent!(model)
