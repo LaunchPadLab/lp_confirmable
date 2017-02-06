@@ -17,6 +17,7 @@ LpConfirmable::Model.send_confirmation_instructions! user do
 end
 ```
 and 'lp_confirmable' will take care of the rest.
+
 5. To confirm a user, call `LpConfirmable::Model.confirm_by_token!(User, confirmation_token)`. This will find the user by confirmation token and confirm them, returning the user model.
 6. Any errors that pop up along the way, such as trying to confirm a non-confirmable object, or an expired token, etc..., will throw an `LpConfirmable::Error`.
 7. To change the global defaults run `bundle exec rails generate lp_confirmable:install` to generate an initializer at `../config/initalizers/lp_confirmable.rb`. See the initializer for more details.
