@@ -149,6 +149,12 @@ describe LpConfirmable::Model do
       end
     end
 
+    it 'when model not found' do
+      assert_raises LpConfirmable::Error do
+        LPC.check_token_active!(nil)
+      end
+    end
+
     it 'when token active' do
       LpConfirmable.config { |config| config.token_lifetime = 14 }
       @confirmable_model.confirmation_token = 'foo'
