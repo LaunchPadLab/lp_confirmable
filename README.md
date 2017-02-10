@@ -2,7 +2,7 @@
 Simple confirmable logic for Rails apps. No baked in routing or mailers, just the barebones logic and migration you need to implement confirmable logic for your users.
 
 ## Installation
-Add `gem lp_confirmable, git: 'https://github.com/launchpadlab/lp_confirmable.git',` to your Gemfile and run `bundle install`.
+Add `gem 'lp_confirmable', git: 'https://github.com/launchpadlab/lp_confirmable.git',` to your Gemfile and run `bundle install`.
 
 ## Usage
 For the purposes of these instructions, I will assume the model you are using is 'User' but it could be anything you want.
