@@ -64,7 +64,7 @@ module LpConfirmable
       end
 
       def check_token_active!(model)
-        raise Error, 'token not found' unless model
+        raise Error, 'confirmation token not found' unless model
         raise Error, 'confirmation token expired' unless token_active?(model)
       end
 
