@@ -283,7 +283,7 @@ describe LpConfirmable::Model do
 
         it 'sets the confirmation token to nil' do
           model = LPC.confirm_by_token!(@klass, @token)
-          assert_nil model.confirmation_token
+          assert_equal model.confirmation_token, @token
         end
 
         it 'sets the confirmed at time to now' do

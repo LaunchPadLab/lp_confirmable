@@ -13,7 +13,6 @@ module LpConfirmable
         check_token_active! model
 
         model.update_columns(
-          confirmation_token: nil,
           confirmed_at: Time.now,
         )
 
