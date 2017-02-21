@@ -13,7 +13,6 @@ module LpConfirmable
         check_token_active! model
 
         model.update_columns(
-          confirmation_token: nil,
           confirmed_at: Time.now,
         )
 
@@ -65,6 +64,7 @@ module LpConfirmable
 
       def check_token_active!(model)
         raise Error, 'confirmation token not found' unless model
+        raise Error, 'account already confirmed' unless model.confirmed_at.nil?
         raise Error, 'confirmation token expired' unless token_active?(model)
       end
 

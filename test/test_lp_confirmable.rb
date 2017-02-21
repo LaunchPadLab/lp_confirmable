@@ -44,6 +44,10 @@ class MockConfirmable < MockActiveRecord
       confirmable.confirmation_sent_at = Time.now - 1 * days
     end
 
+    if kwargs[:confirmation_token] == 'confirmed'
+      confirmable.confirmed_at = Time.now - 1 * days
+    end    
+
     confirmable
   end
 end
@@ -269,6 +273,19 @@ describe LpConfirmable::Model do
           end
         end
       end
+      
+      describe 'when confirmed' do
+        before do
+          @klass = MockConfirmable
+          @token = 'confirmed'
+        end
+
+        it 'raises' do
+          assert_raises LpConfirmable::Error do
+            LPC.confirm_by_token!(@klass, @token)
+          end
+        end
+      end      
 
       describe 'when active' do
         before do
@@ -283,7 +300,7 @@ describe LpConfirmable::Model do
 
         it 'sets the confirmation token to nil' do
           model = LPC.confirm_by_token!(@klass, @token)
-          assert_nil model.confirmation_token
+          assert_equal model.confirmation_token, @token
         end
 
         it 'sets the confirmed at time to now' do
